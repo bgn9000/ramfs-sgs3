@@ -43,6 +43,7 @@ cat << ENDCONFIG
              <spinnerItem name="lulzactiveq" value="lulzactiveq"/> 
              <spinnerItem name="hotplug" value="hotplug"/>
 	     <spinnerItem name="abyssplug" value="abyssplug"/>
+	     <spinnerItem name="conservative" value="conservative"/>
        </spinner>
       <spinner description="Set the maximum freqency the CPU scales up to. Default: `expr \`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\` / 1000` MHz." 
                name="CPU max frequency" 
