@@ -58,7 +58,7 @@ echo "Checking if STweaks is installed"
 #installstweaks=1
 #fi
 
-#if [ ! -f /system/.siyah/stweaks-installed ]; then
+#if [ ! -f /system/.shun/stweaks-installed ]; then
 #installstweaks=1
 #fi
 
@@ -72,9 +72,9 @@ echo "Checking if STweaks is installed"
 #  cat /res/STweaks.apk > /system/app/STweaks.apk
 #  chown 0.0 /system/app/STweaks.apk
 #  chmod 644 /system/app/STweaks.apk
-#  mkdir /system/.siyah
-#  chmod 755 /system/.siyah
-#  echo 1 > /system/.siyah/stweaks-installed
+#  mkdir /system/.shun
+#  chmod 755 /system/.shun
+#  echo 1 > /system/.shun/stweaks-installed
 #fi
 echo "ntfs-3g..."
 if [ ! -s /system/xbin/ntfs-3g ];

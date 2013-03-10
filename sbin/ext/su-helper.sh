@@ -1,12 +1,12 @@
 #!/sbin/busybox sh
 # root installation helper by GM
-rm /data/.siyah/install-root > /dev/null 2>&1
+rm /data/.shun/install-root > /dev/null 2>&1
 exit
 (
 while : ; do
 	# keep this running until we have root
-	if [ -e /data/.siyah/install-root ] ; then
-		rm /data/.siyah/install-root
+	if [ -e /data/.shun/install-root ] ; then
+		rm /data/.shun/install-root
 		/sbin/busybox sh /sbin/ext/install.sh
 		exit 0
 	fi

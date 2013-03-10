@@ -5,18 +5,18 @@
 #exec >>/data/user.log
 #exec 2>&1
 
-mkdir /data/.siyah
-chmod 777 /data/.siyah
+mkdir /data/.shun
+chmod 777 /data/.shun
 
 . /res/customconfig/customconfig-helper
 
 ccxmlsum=`md5sum /res/customconfig/customconfig.xml | awk '{print $1}'`
-if [ "a${ccxmlsum}" != "a`cat /data/.siyah/.ccxmlsum`" ];
+if [ "a${ccxmlsum}" != "a`cat /data/.shun/.ccxmlsum`" ];
 then
-  rm -f /data/.siyah/*.profile
-  echo ${ccxmlsum} > /data/.siyah/.ccxmlsum
+  rm -f /data/.shun/*.profile
+  echo ${ccxmlsum} > /data/.shun/.ccxmlsum
 fi
-[ ! -f /data/.siyah/default.profile ] && cp /res/customconfig/default.profile /data/.siyah
+[ ! -f /data/.shun/default.profile ] && cp /res/customconfig/default.profile /data/.shun
 
 read_defaults
 read_config
