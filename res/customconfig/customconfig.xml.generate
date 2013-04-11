@@ -44,7 +44,7 @@ cat << ENDCONFIG
              <spinnerItem name="hotplug" value="hotplug"/>
 	     <spinnerItem name="abyssplug" value="abyssplug"/>
 	     <spinnerItem name="conservative" value="conservative"/>
-	     <spinnerItem name="conservativeplug" value="conservativeplug"/>
+	     <spinnerItem name="consplug" value="consplug"/>
        </spinner>
       <spinner description="Set the maximum freqency the CPU scales up to. Default: `expr \`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\` / 1000` MHz." 
                name="CPU max frequency" 
@@ -92,6 +92,33 @@ while read FREQ UVOLT; do
                 action="cpuvolt '${FREQ}'"
                 unit=" µV" min="600000" reversed="false" step="12500" max="1400000"/>"'
   CPUFREQLIST="$CPUFREQLIST $FREQ"
+done
+`
+    </settingsPane>
+  </settingsTab>
+  
+  <settingsTab name="BUS_UV">
+
+    <settingsPane description="Apply the settings on boot only if the desired settings prove to be stable, else the device ends up in a boot-loop. If turned off, the displayed values do not correspond the current live values but the saved profile values, some inconsistencies may occur on applying." 
+                  name="BUS control switch">
+      <checkbox description="If enabled, the below settings will be applied at boot." 
+                name="Set BUS settings on boot" 
+                action="controlswitch BUS"
+                label="Set on boot"/>
+    </settingsPane>
+
+    <settingsPane description="Decreasing voltage will lower power consumption of the BUS. Increasing it on overclocked frequencies improves stability. Too low voltage may cause instabilities and freezes." 
+                  name="BUS voltage control">
+
+`
+cat /sys/devices/system/cpu/cpufreq/bus_mV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ MVOLT; do
+  echo '      <seekBar  description="Default voltage: '$MVOLT'mV"
+	        name="'${FREQ}' MHz step" 
+                action="busvolt '${FREQ}'"
+                unit=" mV" min="750" reversed="false" step="25" max="1300"/>"'
+  BUSFREQLIST="$BUSFREQLIST $FREQ"
 done
 `
     </settingsPane>
