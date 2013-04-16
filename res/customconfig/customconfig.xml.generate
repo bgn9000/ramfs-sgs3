@@ -28,6 +28,16 @@ cat << ENDCONFIG
              <spinnerItem name=" -75 mV" value="-75"/> 
              <spinnerItem name="-100 mV" value="-100"/> 
       </spinner>
+      
+      <spinner description="Set CPU freq smooth level" name="Smooth Level" action="generic /sys/devices/system/cpu/cpu0/cpufreq/smooth_level">
+      	     <spinnerItem name="1400MHz" value="4"/>
+             <spinnerItem name="1200MHz" value="5"/>
+             <spinnerItem name="1000MHz" value="6"/>
+             <spinnerItem name="800MHz (default)" value="7"/>
+             <spinnerItem name="500MHz" value="8"/>
+             <spinnerItem name="200MHz" value="9"/>
+	     <spinnerItem name="100MHz" value="10"/>
+       </spinner>
     </settingsPane>
 
     <settingsPane description=""
@@ -300,14 +310,11 @@ done
        <checkbox description="mDNIe sharpness tweaks from hardcore. Requires reboot to be effective." name="mDNIe Sharpness Tweaks" action="generic /tmp/mdniemod" label="mDNIe Sharpness Tweaks"/>
        <checkbox description="Enable inverting the screen colors by quickly pressing Home button 4 times" name="mDNIe Negative Toggle" action="generic01 /sys/module/gpio_keys/parameters/mdnie_shortcut_enabled" label="mDNIe Negative Toggle"/>
        <spinner description="Set CPU freq boost level when you touch the screen. Lower levels will help with the battery with the cost of UI lags" name="Touch Boost Level" action="generic /sys/class/misc/m0mods/touch_boost_level">
-             <spinnerItem name="1200MHz" value="6"/> 
-             <spinnerItem name="1000MHz" value="8"/> 
-             <spinnerItem name="900MHz" value="9"/> 
-             <spinnerItem name="800MHz (default)" value="10"/> 
-             <spinnerItem name="700MHz" value="11"/> 
-             <spinnerItem name="600MHz" value="12"/> 
-             <spinnerItem name="500MHz" value="13"/> 
-             <spinnerItem name="200MHz (disabled)" value="16"/> 
+             <spinnerItem name="1200MHz" value="5"/> 
+             <spinnerItem name="1000MHz" value="6"/> 
+             <spinnerItem name="800MHz (default)" value="7"/> 
+             <spinnerItem name="500MHz" value="8"/> 
+             <spinnerItem name="200MHz (disabled)" value="9"/> 
        </spinner>
        <checkbox description="Enable slide2wake feature which will let you unlock the phone by swiping your finger straight over the screen from left to right. Enabling this feature may decrease your battery life." name="Slide2Wake" action="generic01 /sys/devices/virtual/sec/tsp/tsp_slide2wake" label="Slide2Wake"/>
        <seekBar description="FB earlysuspend delay to run CRT animation when you turn the screen off." 
