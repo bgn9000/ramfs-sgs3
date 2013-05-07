@@ -28,16 +28,6 @@ cat << ENDCONFIG
              <spinnerItem name=" -75 mV" value="-75"/> 
              <spinnerItem name="-100 mV" value="-100"/> 
       </spinner>
-      
-      <spinner description="Set CPU freq smooth level" name="Smooth Level" action="generic /sys/devices/system/cpu/cpu0/cpufreq/smooth_level">
-      	     <spinnerItem name="1400MHz" value="4"/>
-             <spinnerItem name="1200MHz" value="5"/>
-             <spinnerItem name="1000MHz" value="6"/>
-             <spinnerItem name="800MHz (default)" value="7"/>
-             <spinnerItem name="500MHz" value="8"/>
-             <spinnerItem name="200MHz" value="9"/>
-	     <spinnerItem name="100MHz" value="10"/>
-       </spinner>
     </settingsPane>
 
     <settingsPane description=""

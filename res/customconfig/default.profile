@@ -47,7 +47,6 @@ install_root=on
 user_gamma_adjust=0
 tsp_slide2wake=off
 cpu_undervolting=0
-smooth_level=
 scaling_max_freq=1400000
 scaling_min_freq=100000
 GENTLE_FAIR_SLEEPERS=on
