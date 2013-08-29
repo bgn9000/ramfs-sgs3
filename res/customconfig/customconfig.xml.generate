@@ -45,6 +45,7 @@ cat << ENDCONFIG
 	     <spinnerItem name="abyssplug" value="abyssplug"/>
 	     <spinnerItem name="conservative" value="conservative"/>
 	     <spinnerItem name="consplug" value="consplug"/>
+	     <spinnerItem name="zzmoove" value="zzmoove"/>
        </spinner>
       <spinner description="Set the maximum freqency the CPU scales up to. Default: `expr \`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\` / 1000` MHz." 
                name="CPU max frequency" 
@@ -70,6 +71,239 @@ done
        </spinner>
     </settingsPane>
   </settingsTab>
+  
+  <settingsTab name="ZZMoove 0.7a">
+    <settingsPane description="ZZMoove governor settings. WARNING: Do NOT change anything here unless you (responsibly) know what you are doing."  
+                  name="ZZMoove">
+	<checkbox description="If enabled, the below settings will be applied at boot (if governor is zzmoove)." 
+                name="Set ZZMoove settings on boot" 
+                action="controlswitch ZZMOOVE"
+                label="Set on boot"/>        
+    </settingsPane>
+    
+    <settingsPane description="LCDFreq Settings" name="LCDFreq Settings">
+ 	<spinner description="LCDFreq (Default=Disabled)" 
+		name="zzmoove_lcdfreq_enable" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_enable">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+ 	</spinner>
+ 
+     	<seekBar  description="LCDFreq kick in cores (Default=0)"
+               name="zzmoove_lcdfreq_kick_in_cores"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_kick_in_cores" 
+               unit="" min="0" reversed="false" step="1" max="3"/>
+
+     	<seekBar  description="LCDFreq kick in freq (Default=500000)"
+               name="zzmoove_lcdfreq_kick_in_freq"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_kick_in_freq" 
+               unit="" min="300000" reversed="false" step="100000" max="900000"/>
+
+     	<seekBar  description="LCDFreq kick in down delay (Default=20)"
+               name="zzmoove_lcdfreq_kick_in_down_delay"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_kick_in_down_delay" 
+               unit="" min="10" reversed="false" step="1" max="50"/>
+
+     	<seekBar  description="LCDFreq kick in up delay (Default=50)"
+               name="zzmoove_lcdfreq_kick_in_up_delay"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_kick_in_up_delay" 
+               unit="" min="30" reversed="false" step="1" max="70"/>
+     </settingsPane>
+ 
+     <settingsPane description="Thresholds Settings" name="Thresholds Settings">
+     	<seekBar  description="Up Threshold (Default=70)"
+               name="zzmoove_up_threshold"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold" 
+               unit="" min="60" reversed="false" step="1" max="100"/>
+               
+     	<seekBar  description="Down Threshold (Default=52)"
+               name="zzmoove_down_threshold"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold" 
+               unit="" min="40" reversed="false" step="1" max="100"/>
+
+     	<seekBar  description="Up Threshold Hotplug cpu1 (Default=68)"
+               name="zzmoove_up_threshold_hotplug1"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug1" 
+               unit="" min="55" reversed="false" step="1" max="100"/>
+
+     	<seekBar  description="Down Threshold Hotplug cpu1 (Default=55)"
+               name="zzmoove_down_threshold_hotplug1"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug1" 
+               unit="" min="45" reversed="false" step="1" max="70"/>
+
+     	<seekBar  description="Up Threshold Hotplug cpu2 (Default=68)"
+               name="zzmoove_up_threshold_hotplug2"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug2" 
+               unit="" min="55" reversed="false" step="1" max="100"/>
+
+     	<seekBar  description="Down Threshold Hotplug cpu2 (Default=55)"
+               name="zzmoove_down_threshold_hotplug2"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug2" 
+               unit="" min="45" reversed="false" step="1" max="70"/>
+
+     	<seekBar  description="Up Threshold Hotplug cpu3 (Default=68)"
+               name="zzmoove_up_threshold_hotplug3"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug3" 
+               unit="" min="55" reversed="false" step="1" max="100"/>
+
+     	<seekBar  description="Down Threshold Hotplug cpu3 (Default=55)"
+               name="zzmoove_down_threshold_hotplug3"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug3" 
+               unit="" min="45" reversed="false" step="1" max="70"/>
+
+     	<seekBar  description="Down Threshold Hotplug Freq1 (Default=0)"
+               name="zzmoove_down_threshold_hotplug_freq1"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq1" 
+               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+
+     	<seekBar  description="Down Threshold Hotplug Freq2 (Default=0)"
+               name="zzmoove_down_threshold_hotplug_freq2"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq2" 
+               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+
+     	<seekBar  description="Down Threshold Hotplug Freq3 (Default=0)"
+               name="zzmoove_down_threshold_hotplug_freq3"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq3" 
+               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+
+     	<seekBar  description="Up Threshold Hotplug Freq1 (Default=0)"
+               name="zzmoove_up_threshold_hotplug_freq1"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq1" 
+               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+
+     	<seekBar  description="Up Threshold Hotplug Freq2 (Default=0)"
+               name="zzmoove_up_threshold_hotplug_freq2"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq2" 
+               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+
+     	<seekBar  description="Up Threshold Hotplug Freq3 (Default=0)"
+               name="zzmoove_up_threshold_hotplug_freq3"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq3" 
+               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+               
+     	<seekBar  description="Up Threshold on earlysuspend (Default=90)"
+               name="zzmoove_up_threshold_sleep"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_sleep" 
+               unit="" min="75" reversed="false" step="1" max="100"/>
+
+     	<seekBar  description="Down Threshold on earlysuspend (Default=44)"
+               name="zzmoove_down_threshold_sleep"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_sleep" 
+               unit="" min="35" reversed="false" step="1" max="60"/>
+     </settingsPane>
+
+     <settingsPane description="Early Demand Settings" name="Early Demand Settings">              
+ 	<spinner description="Early Demand (Default=Disabled)" 
+		name="zzmoove_early_demand" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/early_demand">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+ 	</spinner>
+ 
+     	<seekBar  description="Grad Up Threshold (Default=25)"
+               name="zzmoove_grad_up_threshold"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/grad_up_threshold" 
+               unit="" min="15" reversed="false" step="5" max="95"/>
+     </settingsPane>
+
+     <settingsPane description="Sampling Settings" name="Sampling Settings">
+     	<seekBar  description="Sampling rate (Default=100000)"
+               name="zzmoove_sampling_rate"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/sampling_rate" 
+               unit="" min="50000" reversed="false" step="10000" max="200000"/>
+               
+     	<seekBar  description="Sampling minimum rate (Default=30000)"
+               name="zzmoove_sampling_rate_min"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/sampling_rate_min" 
+               unit="" min="1000" reversed="false" step="10000" max="50000"/>
+               
+     	<seekBar  description="Sampling rate sleep multiplier (Default=2)"
+               name="zzmoove_sampling_rate_sleep_multiplier"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/sampling_rate_sleep_multiplier" 
+               unit="" min="1" reversed="false" step="1" max="5"/>
+               
+     	<seekBar  description="Sampling down factor (Default=1)"
+               name="zzmoove_sampling_down_factor"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/sampling_down_factor" 
+               unit="" min="0" reversed="false" step="1" max="5"/>
+               
+ 	<spinner description="Sampling down max momentum (Default=Disable)" 
+		name="zzmoove_sampling_down_max_momentum" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/sampling_down_max_momentum">
+             <spinnerItem name="Disable" value="0"/> 
+             <spinnerItem name="Enable" value="1"/> 
+ 	</spinner>
+               
+     	<seekBar  description="Sampling down momentum sensitivity (Default=50)"
+               name="zzmoove_sampling_down_momentum_sensitivity"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/sampling_down_momentum_sensitivity" 
+               unit="" min="1" reversed="false" step="1" max="500"/>       
+     </settingsPane>
+
+     <settingsPane description="Other Settings" name="Other Settings">
+	 <spinner description="Legacy mode (Default=Enabled)" 
+	 	name="zzmoove_legacy_mode" 
+	 	action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/legacy_mode">
+             <spinnerItem name="Disabled" value="1"/> 
+             <spinnerItem name="Enabled" value="0"/> 
+ 	</spinner>
+ 	<spinner description="Ignore Nice Load (Default=Disabled)" 
+		name="zzmoove_ignore_nice_load" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/ignore_nice_load">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+ 	</spinner>
+ 	<spinner description="Enable/Disable Hotplug (Default=Enable)" 
+		name="zzmoove_disable_hotplug" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug">
+             <spinnerItem name="Enable" value="0"/> 
+             <spinnerItem name="Disable" value="1"/> 
+ 	</spinner>
+
+     	<seekBar  description="Hotplug idle threshold (Default=0)"
+               name="zzmoove_hotplug_idle_threshold"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/hotplug_idle_threshold" 
+               unit="" min="0" reversed="false" step="1" max="100"/>
+      
+     	<seekBar  description="Hotplug block cycles (Default=0)"
+               name="zzmoove_hotplug_block_cycles"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/hotplug_block_cycles" 
+               unit="" min="0" reversed="false" step="1" max="15"/>
+      
+ 	<spinner description="Enable Hotplug sleep (Default=Enabled)" 
+		name="zzmoove_disable_hotplug_sleep" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug_sleep">
+             <spinnerItem name="Disabled" value="1"/> 
+             <spinnerItem name="Enabled" value="0"/> 
+ 	</spinner>
+      
+     	<seekBar  description="Hotplug sleep (Default=0)"
+               name="zzmoove_hotplug_sleep"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/hotplug_sleep" 
+               unit="" min="0" reversed="false" step="1" max="3"/>
+      
+     	<seekBar  description="Smooth Up (Default=75)"
+               name="zzmoove_smooth_up"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/smooth_up" 
+               unit="" min="65" reversed="false" step="1" max="85"/>
+
+     	<seekBar  description="Smooth Up on earlysuspend (Default=100)"
+               name="zzmoove_smooth_up_sleep"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/smooth_up_sleep" 
+               unit="" min="85" reversed="false" step="1" max="100"/>
+               
+     	<seekBar  description="Frequency step (Default=5)"
+               name="zzmoove_freq_step"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/freq_step" 
+               unit="" min="1" reversed="false" step="1" max="25"/>
+               
+     	<seekBar  description="Frequency step sleep (Default=5)"
+               name="zzmoove_freq_step_sleep"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/freq_step_sleep" 
+               unit="" min="1" reversed="false" step="1" max="25"/>        
+     </settingsPane>
+  </settingsTab>
+    
   <settingsTab name="CPU_UV">
 
     <settingsPane description="Apply the settings on boot only if the desired settings prove to be stable, else the device ends up in a boot-loop. If turned off, the displayed values do not correspond the current live values but the saved profile values, some inconsistencies may occur on applying." 
@@ -299,7 +533,9 @@ done
     <settingsPane description="Other screen related settings" name="Other Settings">
        <checkbox description="mDNIe sharpness tweaks from hardcore. Requires reboot to be effective." name="mDNIe Sharpness Tweaks" action="generic /tmp/mdniemod" label="mDNIe Sharpness Tweaks"/>
        <checkbox description="Enable inverting the screen colors by quickly pressing Home button 4 times" name="mDNIe Negative Toggle" action="generic01 /sys/module/gpio_keys/parameters/mdnie_shortcut_enabled" label="mDNIe Negative Toggle"/>
-       <spinner description="Set CPU freq boost level when you touch the screen. Lower levels will help with the battery with the cost of UI lags" name="Touch Boost Level" action="generic /sys/class/misc/m0mods/touch_boost_level">
+       <spinner description="Set CPU freq boost level when you touch the screen. Lower levels will help with the battery with the cost of UI lags" 
+       	name="Touch Boost Level" 
+       	action="generic /sys/class/misc/m0mods/touch_boost_level">
              <spinnerItem name="1200MHz" value="5"/> 
              <spinnerItem name="1000MHz" value="6"/> 
              <spinnerItem name="800MHz (default)" value="7"/> 
