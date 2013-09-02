@@ -72,7 +72,7 @@ done
     </settingsPane>
   </settingsTab>
   
-  <settingsTab name="ZZMoove 0.7a">
+  <settingsTab name="ZZMoove 0.7c">
     <settingsPane description="ZZMoove governor settings. WARNING: Do NOT change anything here unless you (responsibly) know what you are doing."  
                   name="ZZMoove">
 	<checkbox description="If enabled, the below settings will be applied at boot (if governor is zzmoove)." 
@@ -114,82 +114,130 @@ done
      	<seekBar  description="Up Threshold (Default=70)"
                name="zzmoove_up_threshold"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold" 
-               unit="" min="60" reversed="false" step="1" max="100"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
                
      	<seekBar  description="Down Threshold (Default=52)"
                name="zzmoove_down_threshold"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold" 
-               unit="" min="40" reversed="false" step="1" max="100"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
 
      	<seekBar  description="Up Threshold Hotplug cpu1 (Default=68)"
                name="zzmoove_up_threshold_hotplug1"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug1" 
-               unit="" min="55" reversed="false" step="1" max="100"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
 
      	<seekBar  description="Down Threshold Hotplug cpu1 (Default=55)"
                name="zzmoove_down_threshold_hotplug1"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug1" 
-               unit="" min="45" reversed="false" step="1" max="70"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
 
      	<seekBar  description="Up Threshold Hotplug cpu2 (Default=68)"
                name="zzmoove_up_threshold_hotplug2"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug2" 
-               unit="" min="55" reversed="false" step="1" max="100"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
 
      	<seekBar  description="Down Threshold Hotplug cpu2 (Default=55)"
                name="zzmoove_down_threshold_hotplug2"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug2" 
-               unit="" min="45" reversed="false" step="1" max="70"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
 
      	<seekBar  description="Up Threshold Hotplug cpu3 (Default=68)"
                name="zzmoove_up_threshold_hotplug3"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug3" 
-               unit="" min="55" reversed="false" step="1" max="100"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
 
      	<seekBar  description="Down Threshold Hotplug cpu3 (Default=55)"
                name="zzmoove_down_threshold_hotplug3"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug3" 
-               unit="" min="45" reversed="false" step="1" max="70"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
+	       
+	<spinner description="Down Threshold Hotplug Freq1 (Default=0)" 
+               name="zzmoove_down_threshold_hotplug_freq1" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq1">"
+	         <spinnerItem name="Disable" value="0"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
 
-     	<seekBar  description="Down Threshold Hotplug Freq1 (Default=0)"
-               name="zzmoove_down_threshold_hotplug_freq1"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq1" 
-               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+	<spinner description="Down Threshold Hotplug Freq2 (Default=0)" 
+               name="zzmoove_down_threshold_hotplug_freq2" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq2">"
+	       	 <spinnerItem name="Disable" value="0"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
+	
+	<spinner description="Down Threshold Hotplug Freq3 (Default=0)" 
+               name="zzmoove_down_threshold_hotplug_freq3" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq3">"
+	       	 <spinnerItem name="Disable" value="0"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
+	       
+	<spinner description="Up Threshold Hotplug Freq1 (Default=0)" 
+               name="zzmoove_up_threshold_hotplug_freq1" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq1">"
+	       	 <spinnerItem name="Disable" value="0"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
+	
+	<spinner description="Up Threshold Hotplug Freq2 (Default=0)" 
+               name="zzmoove_up_threshold_hotplug_freq2" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq2">"
+	       	 <spinnerItem name="Disable" value="0"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
 
-     	<seekBar  description="Down Threshold Hotplug Freq2 (Default=0)"
-               name="zzmoove_down_threshold_hotplug_freq2"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq2" 
-               unit="" min="0" reversed="false" step="200000" max="1600000"/>
-
-     	<seekBar  description="Down Threshold Hotplug Freq3 (Default=0)"
-               name="zzmoove_down_threshold_hotplug_freq3"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_hotplug_freq3" 
-               unit="" min="0" reversed="false" step="200000" max="1600000"/>
-
-     	<seekBar  description="Up Threshold Hotplug Freq1 (Default=0)"
-               name="zzmoove_up_threshold_hotplug_freq1"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq1" 
-               unit="" min="0" reversed="false" step="200000" max="1600000"/>
-
-     	<seekBar  description="Up Threshold Hotplug Freq2 (Default=0)"
-               name="zzmoove_up_threshold_hotplug_freq2"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq2" 
-               unit="" min="0" reversed="false" step="200000" max="1600000"/>
-
-     	<seekBar  description="Up Threshold Hotplug Freq3 (Default=0)"
-               name="zzmoove_up_threshold_hotplug_freq3"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq3" 
-               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+     	<spinner description="Up Threshold Hotplug Freq3 (Default=0)" 
+               name="zzmoove_up_threshold_hotplug_freq3" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_hotplug_freq3">"
+	       	 <spinnerItem name="Disable" value="0"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
                
      	<seekBar  description="Up Threshold on earlysuspend (Default=90)"
                name="zzmoove_up_threshold_sleep"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/up_threshold_sleep" 
-               unit="" min="75" reversed="false" step="1" max="100"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
 
      	<seekBar  description="Down Threshold on earlysuspend (Default=44)"
                name="zzmoove_down_threshold_sleep"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/down_threshold_sleep" 
-               unit="" min="35" reversed="false" step="1" max="60"/>
+               unit="" min="0" reversed="false" step="1" max="100"/>
      </settingsPane>
 
      <settingsPane description="Early Demand Settings" name="Early Demand Settings">              
@@ -300,7 +348,39 @@ done
      	<seekBar  description="Frequency step sleep (Default=5)"
                name="zzmoove_freq_step_sleep"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/freq_step_sleep" 
-               unit="" min="1" reversed="false" step="1" max="25"/>        
+               unit="" min="1" reversed="false" step="1" max="25"/>
+	
+	<seekBar  description="Frequency limit sleep (Default=0)"
+               name="zzmoove_freq_limit_sleep"
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/freq_limit_sleep" 
+               unit="" min="0" reversed="false" step="200000" max="1600000"/>
+	       
+	<spinner description="Frequency limit sleep (Default=0)" 
+               name="zzmoove_freq_limit_sleep" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/freq_limit_sleep">"
+	       	 <spinnerItem name="Disable" value="0"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
+	 
+	<spinner description="Enable Fast Scaling on awake (Default=Disable)" 
+		name="zzmoove_fast_scaling" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/fast_scaling">
+	     <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/>
+ 	</spinner> 
+	
+	<spinner description="Enable Fast Scaling on early suspend (Default=Disable)" 
+		name="zzmoove_fast_scaling_sleep" 
+		action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/fast_scaling_sleep">
+	     <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/>
+ 	</spinner> 
      </settingsPane>
   </settingsTab>
     

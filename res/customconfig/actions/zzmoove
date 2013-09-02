@@ -1,14 +1,28 @@
 #!/sbin/busybox sh
 
 if [ "a$2" != "a" ];then
-	filename=zzmoove_$(basename $2)
-	evalcmd='eval "echo \$$filename"'
-	if [ "$scaling_governor" == "zzmoove" ];then
+	if [ "a$3" == "a" ];then
+		filename=zzmoove_$(basename $2)
+		evalcmd='eval "echo \$$filename"'
+#		if [ "$scaling_governor" == "zzmoove" ];then
 		if [ "$CONTROLSWITCH_ZZMOOVE" == "on" -o "$CONFIG_BOOTING" != "1" ]; then
-        		eval $evalcmd > $2
+			if [ -f $2 ];then
+        			eval $evalcmd > $2
+			fi
 		fi
+#		fi
+		eval $evalcmd
+	else
+		filename=zzmoove_$(basename $2)
+		evalcmd='eval "echo \$$filename"'
+		eval $filename=`echo $3`
+		if [ "$scaling_governor" == "zzmoove" ];then
+			if [ -f $2 ];then
+    				eval $evalcmd > $2
+  			fi
+		fi
+		eval $evalcmd
 	fi
-	eval $evalcmd
 fi
 
 
