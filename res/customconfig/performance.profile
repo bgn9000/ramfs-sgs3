@@ -120,3 +120,6 @@ zzmoove_legacy_mode=0
 zzmoove_hotplug_idle_threshold=0
 zzmoove_hotplug_block_cycles=0
 zzmoove_disable_hotplug_sleep=0
+zzmoove_freq_limit_sleep=800000
+zzmoove_fast_scaling=1
+zzmoove_fast_scaling_sleep=0

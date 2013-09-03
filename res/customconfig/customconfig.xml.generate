@@ -349,11 +349,6 @@ done
                name="zzmoove_freq_step_sleep"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/freq_step_sleep" 
                unit="" min="1" reversed="false" step="1" max="25"/>
-	
-	<seekBar  description="Frequency limit sleep (Default=0)"
-               name="zzmoove_freq_limit_sleep"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/freq_limit_sleep" 
-               unit="" min="0" reversed="false" step="200000" max="1600000"/>
 	       
 	<spinner description="Frequency limit sleep (Default=0)" 
                name="zzmoove_freq_limit_sleep" 
