@@ -72,7 +72,7 @@ done
     </settingsPane>
   </settingsTab>
   
-  <settingsTab name="ZZMoove 0.7c">
+  <settingsTab name="ZZMoove 0.7d">
     <settingsPane description="ZZMoove governor settings. WARNING: Do NOT change anything here unless you (responsibly) know what you are doing."  
                   name="ZZMoove">
 	<checkbox description="If enabled, the below settings will be applied at boot (if governor is zzmoove)." 
