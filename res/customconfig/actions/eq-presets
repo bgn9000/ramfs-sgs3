@@ -1,5 +1,6 @@
 #!/sbin/busybox sh
 
+
 if [ "a$2" != "a" ];then
 
 filename=$(basename $2)
@@ -12,6 +13,12 @@ else
   eval $evalcmd
   evalcmd='eval "echo \$$filename"'
   eval $evalcmd
+  
+fi
+
+fi
+
+if [ "$soundengine" == "scoobydoo" ];then
 
 echo -${digital_gain}000 > /sys/class/misc/scoobydoo_sound/digital_gain
 #echo 1 A 0x0FBB > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
@@ -82,6 +89,14 @@ case "$eq_preset" in
     echo 3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
     echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
     ;;
+  7)
+    echo 10 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo -1 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo 2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 10 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
 esac;
 else
     echo $eq_band1 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
@@ -92,5 +107,4 @@ else
     echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
 fi
 
-fi
 fi
