@@ -811,8 +811,10 @@ done
   </settingsTab>
   
   <settingsTab name="MDNIE">
+
     <settingsPane description="mobile Digital Natural Image engine control. Samsungs hardware image post-processor controls virtually any image manipulation. All control master switches, if left as delta controls, will negate the sequence setting if checked. Master sequence has SCR and CS enabled by default."
 		  name="Global controls">
+
       <checkbox  description="Register intercept acts like a hook and will enable catching scenario settings and modifying them through delta controls. If a scenario does not have a setting (register) in its base sequence, then it cannot be modified by the hook."
                 name="Register intercept" 
                 action="generic01 /sys/class/misc/mdnie/hook_intercept"
@@ -822,10 +824,12 @@ done
                 name="Master sequence" 
                 action="generic01 /sys/class/misc/mdnie/sequence_intercept"
                 label="Enable master sequence"/>
+
     </settingsPane>
 
     <settingsPane description="Uses mDNIe to bypass the backlight driver brightness and decrease brightness by reducing luminance on the the channel RGB values. It allows to reduce brightness beyond the stock minimum."
 		  name="Digital screen brightness">
+
       <seekBar  description="The amount of luminance to be shaved off from the colour channel components."
 		name="Brightness reduction"
                 action="generic /sys/class/misc/mdnie/brightness_reduction"
@@ -840,10 +844,12 @@ done
 		name="Auto-brightness input delta"
                 action="generic /sys/class/misc/mdnie/brightness_input_delta"
                 unit="" min="0" reversed="false" step="1" max="64"/>
+
     </settingsPane>
 
     <settingsPane description="Work exclusively on the stock video player."
 		  name="DNR and HDR control">
+
       <checkbox  description="" 
                 name="Toggle digital noise reduction" 
                 action="generic01 /sys/class/misc/mdnie/hook_control/s_digital_noise_reduction"
@@ -853,10 +859,12 @@ done
                 name="Toggle high dynamic range" 
                 action="generic01 /sys/class/misc/mdnie/hook_control/s_high_dynamic_range"
                 label="Toggle HDR for video playback"/>
+
     </settingsPane>
 
     <settingsPane description="Chroma saturation works in the HSL colour space, modifying saturation will dilute the hue with white or darken with black. Variations in chroma are achieved by adding different amounts of a neutral gray of the same value as the color you want to alter."
 		  name="Chroma saturation control">
+
       <checkbox  description="Factory settings override the controls." 
                 name="Chroma saturation factory settings" 
                 action="generic01 /sys/class/misc/mdnie/hook_control/s_factory_chroma_saturation"
@@ -896,10 +904,12 @@ done
 		name="Magenta gain"
                 action="generic2 /sys/class/misc/mdnie/hook_control/cs_magenta"
                 unit="" min="-16" reversed="false" step="1" max="32"/>
+
     </settingsPane>
 
     <settingsPane description="Changes white colour temperature"
 		  name="White colour temperature control">
+
       <checkbox  description="" 
                 name="Colour temperature master switch" 
                 action="generic01 /sys/class/misc/mdnie/hook_control/s_MCM"
@@ -909,6 +919,7 @@ done
 		name="Colour temperature"
                 action="generic2 /sys/class/misc/mdnie/hook_control/mcm_temperature"
                 unit="00K" min="-20" reversed="false" step="1" max="20"/>
+
     </settingsPane>
 
     <settingsPane description="The controls is divided in 8 channels, RGB, YCM, W and K. SCR controls are RGB modifiers on each of the controls altering the primary luminosities on that channel."
