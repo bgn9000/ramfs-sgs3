@@ -93,11 +93,18 @@ done
                name="zzmoove_lcdfreq_kick_in_cores"
                action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_kick_in_cores" 
                unit="" min="0" reversed="false" step="1" max="3"/>
-
-     	<seekBar  description="LCDFreq kick in freq (Default=500000)"
-               name="zzmoove_lcdfreq_kick_in_freq"
-               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_kick_in_freq" 
-               unit="" min="300000" reversed="false" step="100000" max="900000"/>
+	       
+	<spinner description="LCDFreq kick in freq (Default=500000)" 
+               name="zzmoove_lcdfreq_kick_in_freq" 
+               action="zzmoove /sys/devices/system/cpu/cpufreq/zzmoove/lcdfreq_kick_in_freq">"
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}000'"/>'
+done
+`
+        </spinner>
 
      	<seekBar  description="LCDFreq kick in down delay (Default=20)"
                name="zzmoove_lcdfreq_kick_in_down_delay"
@@ -899,7 +906,7 @@ done
 		name="Cyan gain"
                 action="generic2 /sys/class/misc/mdnie/hook_control/cs_cyan"
                 unit="" min="-16" reversed="false" step="1" max="32"/>
-
+		
       <seekBar  description=""
 		name="Magenta gain"
                 action="generic2 /sys/class/misc/mdnie/hook_control/cs_magenta"
