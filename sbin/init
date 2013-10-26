@@ -16,7 +16,13 @@ fi
 
 SECONDROM=1
 NOBOOTLOGO=0
-mkdir -p /dev/block
+mkdir proc
+mkdir sys
+mkdir system
+
+mkdir /dev
+mkdir /dev/block
+
 mkdir /dev/input
 mkdir /dev/graphics
 mknod /dev/graphics/fb0 c 29 0
@@ -25,6 +31,7 @@ mknod /dev/input/event2 c 13 66
 mknod /dev/input/event8 c 13 72
 mknod /dev/input/event9 c 13 73
 mknod /dev/ashmem c 10 60
+mknod /dev/block/mmcblk0 b 179 0
 mknod /dev/block/mmcblk0p9 b 179 9
 mknod /dev/block/mmcblk0p12 b 179 12
 mknod /dev/block/loop0 b 7 0
@@ -42,7 +49,7 @@ if grep -q bootmode=2 /proc/cmdline ; then
   NEXTBOOT=0
 fi
 
-#move .secondrom folder back to the original location if cm10.1 moved it to a subfolder
+#move .secondrom folder back to the original location if cm10.x moved it to a subfolder
 if [ -d /.secondrom/media/0/.secondrom ];then
   if [ ! -d /.secondrom/media/.secondrom ];then
     mkdir /.secondrom/media/.secondrom
@@ -75,6 +82,10 @@ if [ "$SECONDROM" == "0" ];then
     /sbin/choose_rom $SECONDROM
   fi
 else
+  if [ ! -f /.secondrom/media/.secondrom/data/.layout_version ];then
+    echo 2 > /.secondrom/media/.secondrom/data/.layout_version
+    mkdir /.secondrom/media/0
+  fi
   if [ "$NEXTBOOT" == "1" ];then
     SECONDROM=0;
   elif [ "$NEXTBOOT" == "2" ];then
@@ -110,35 +121,72 @@ fi
 MIUI=0
 CM10=0
 CM101=0
+CM102=0
+SAMMY42=0
 
 [ -f /system/framework/miui-framework.jar ] && MIUI=1
 [ -f /system/framework/seccamera.jar ] || CM10=1
 [ -f /system/framework/framework2.jar ] || CM101=1
+[ -f /system/framework/telephony-common.jar ] && SAMMY42=1
 
+if busybox grep -q ro.build.version.release=4.3 /system/build.prop; then
+   CM102=1
+fi
 
 if [ "$CM101" == 1 ];
 then
-  echo 3 > /proc/sys/kernel/rom_feature_set
-  mv -f /lib/modules/dhd_cm.ko /lib/modules/dhd.ko
-  mv -f /res/misc/init.cm10.1/* /
+   if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
+     echo 0 > /proc/sys/kernel/rom_feature_set
+     cp -f /res/misc/init.cm10.1/lpm.rc init.rc
+     rm -f init.smdk4x12.rc
+   else
+     	echo 7 > /proc/sys/kernel/rom_feature_set
+#    	mv -f /lib/modules/dhd_cm.ko /lib/modules/dhd.ko
+	if [ "$CM102" == 1 ];
+	then
+	  mv -f /res/misc/init.cm10.2/* /
+	  CM102=1
+	else
+	  mv -f /res/misc/init.cm10.1/* /
+	fi
+   fi
 else
   if [ "$CM10" == 1 ];
   then
-    echo 3 > /proc/sys/kernel/rom_feature_set
-    mv -f /lib/modules/dhd_cm.ko /lib/modules/dhd.ko
-    mv -f /res/misc/init.cm10/* /
+    	echo 3 > /proc/sys/kernel/rom_feature_set
+#    	mv -f /lib/modules/dhd_cm.ko /lib/modules/dhd.ko
+    	mv -f /res/misc/init.cm10/* /
   else
-    echo 2 > /proc/sys/kernel/rom_feature_set
-    mv -f /res/misc/init.41/* /
+    if [ "$SAMMY42" == 1 ];
+    then
+	echo 6 > /proc/sys/kernel/rom_feature_set
+	mv -f /res/misc/init.42/* /
+    else
+	if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
+		echo 0 > /proc/sys/kernel/rom_feature_set
+		cp -f /res/misc/init.41/lpm.rc init.rc
+		rm -f init.smdk4x12.rc
+	else
+		echo 2 > /proc/sys/kernel/rom_feature_set
+		mv -f /res/misc/init.41/* /
+	fi
+    fi
   fi
 fi
 
 if [ "$SECONDROM" == "1" ];then
-  mv /init.smdk4x12.rc.2 /init.smdk4x12.rc
-  mv /init.rc.2 /init.rc
-  mv /fstab.smdk4x12.2 /fstab.smdk4x12
+	mv /init.smdk4x12.rc.2 /init.smdk4x12.rc
+	mv /init.rc.2 /init.rc
+	mv /fstab.smdk4x12.2 /fstab.smdk4x12
+	if [ "$CM102" == 1 ];then
+#	  mv /innt.2 /innt
+	  rm -f /system/etc/init.d/10sd_mount
+	else
+	  rm -f /system/etc/init.d/10sd_mount
+	fi
 else
-  rm -f /init.rc.2 /init.smdk4x12.rc.2 /fstab.smdk4x12.2
+	rm -f /system/etc/init.d/10sd_mount
+	rm -f /init.rc.2 /init.smdk4x12.rc.2 /fstab.smdk4x12.2
 fi
 
 umount -f /system
